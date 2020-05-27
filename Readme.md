@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Евгений Александрович  Давыдов](https://up.htmlacademy.ru/javascript/20/user/1346789).
-* Наставник: `Неизвестно`.
+* Наставник: [Ярослав Ермилов](https://htmlacademy.ru/profile/id776985).
 
 ---
 
