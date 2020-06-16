@@ -5,6 +5,8 @@ var PICTURE_TEMPLATE = document.querySelector('#picture').content.querySelector(
 var PICTURES_CONTAINER = document.querySelector('.pictures');
 var MAX_NUMBER = 26;
 
+var BIG_PICTURE = document.querySelector('.big-picture');
+
 // случайное число от и до
 var randomInteger = function (min, max) {
   var randomNumber = min + Math.random() * (max + 1 - min);
@@ -51,6 +53,7 @@ for (var i = 1; i < MAX_NUMBER; i++) {
     comments: generatorComments()
   });
 }
+// рисует много маленьких картинок
 var renderPicture = function (photo) {
   var pictureElement = PICTURE_TEMPLATE.cloneNode(true);
 
@@ -69,3 +72,33 @@ for (var g = 0; g < photos.length; g++) {
 }
 
 PICTURES_CONTAINER.appendChild(fragment);
+
+
+// Большая картинка
+BIG_PICTURE.classList.remove('hidden');
+
+var renderBigPicture = function (bigPhoto) {
+  // вставляет картинку просмотра, лайки для картинки и количество комментариев
+  BIG_PICTURE.querySelector('img').setAttribute('src', bigPhoto.url);
+  BIG_PICTURE.querySelector('.likes-count').textContent = bigPhoto.likes;
+  BIG_PICTURE.querySelector('.comments-count').textContent = bigPhoto.comments.length;
+  // создает комментарий по шаблону
+  var comments = BIG_PICTURE.querySelector('.social__comments');
+  comments.querySelector('.social__picture').setAttribute('src', bigPhoto.comments[1].avatar);
+  comments.querySelector('.social__picture').setAttribute('alt', bigPhoto.comments[1].name);
+  comments.querySelector('.social__text').textContent = bigPhoto.comments[1].message;
+  // вставляет описание картинки
+  BIG_PICTURE.querySelector('.social__caption').textContent = bigPhoto.description;
+  // скрывает счётчик комментариев и загрузку новых комментариев
+  var commentCount = BIG_PICTURE.querySelector('.social__comment-count');
+  var commentsLoader = BIG_PICTURE.querySelector('.comments-loader');
+  commentCount.classList.add('hidden');
+  commentsLoader.classList.add('hidden');
+  // блокирует прокрутку фотографий на фоне
+  document.body.classList.add('modal-open');
+
+  return BIG_PICTURE;
+};
+
+renderBigPicture(photos[1]);
+
