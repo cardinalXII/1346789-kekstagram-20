@@ -82,11 +82,8 @@ var renderBigPicture = function (bigPhoto) {
   BIG_PICTURE.querySelector('img').setAttribute('src', bigPhoto.url);
   BIG_PICTURE.querySelector('.likes-count').textContent = bigPhoto.likes;
   BIG_PICTURE.querySelector('.comments-count').textContent = bigPhoto.comments.length;
-  // создает комментарий по шаблону
-  var comments = BIG_PICTURE.querySelector('.social__comments');
-  comments.querySelector('.social__picture').setAttribute('src', bigPhoto.comments[1].avatar);
-  comments.querySelector('.social__picture').setAttribute('alt', bigPhoto.comments[1].name);
-  comments.querySelector('.social__text').textContent = bigPhoto.comments[1].message;
+
+
   // вставляет описание картинки
   BIG_PICTURE.querySelector('.social__caption').textContent = bigPhoto.description;
   // скрывает счётчик комментариев и загрузку новых комментариев
@@ -96,9 +93,31 @@ var renderBigPicture = function (bigPhoto) {
   commentsLoader.classList.add('hidden');
   // блокирует прокрутку фотографий на фоне
   document.body.classList.add('modal-open');
-
-  return BIG_PICTURE;
 };
 
 renderBigPicture(photos[1]);
 
+// удалаяет шаблонные комментарии
+var comments = BIG_PICTURE.querySelector('.social__comments');
+var commentsLi = BIG_PICTURE.querySelectorAll('.social__comment');
+comments.removeChild(commentsLi[0]);
+comments.removeChild(commentsLi[1]);
+
+// создает комментарий по шаблону
+var newComments = function (bigPhotoComment) {
+
+  var commentElement = commentsLi[0].cloneNode(true);
+  commentElement.querySelector('.social__picture').setAttribute('src', bigPhotoComment.comments[z].avatar);
+  commentElement.querySelector('.social__picture').setAttribute('alt', bigPhotoComment.comments[z].name);
+  commentElement.querySelector('.social__text').textContent = bigPhotoComment.comments[z].message;
+
+  return commentElement;
+};
+
+var z = 0;
+for (var v = 0; v < photos[0].comments.length; v++) {
+  fragment.appendChild(newComments(photos[0]));
+  z++;
+}
+
+comments.appendChild(fragment);
