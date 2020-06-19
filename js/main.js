@@ -93,31 +93,27 @@ var renderBigPicture = function (bigPhoto) {
   commentsLoader.classList.add('hidden');
   // блокирует прокрутку фотографий на фоне
   document.body.classList.add('modal-open');
+  // удалаяет шаблонные комментарии
+  var comments = BIG_PICTURE.querySelector('.social__comments');
+  var commentItems = BIG_PICTURE.querySelectorAll('.social__comment');
+
+  commentItems.forEach(function (element) {
+    comments.removeChild(element);
+  });
+  // создает комментарий по шаблону
+  var createComments = function (photoComment) {
+    for (var v = 0; v < photos[1].comments.length; v++) {
+      var commentElement = commentItems[0].cloneNode(true);
+      commentElement.querySelector('.social__picture').setAttribute('src', photoComment.comments[v].avatar);
+      commentElement.querySelector('.social__picture').setAttribute('alt', photoComment.comments[v].name);
+      commentElement.querySelector('.social__text').textContent = photoComment.comments[v].message;
+      fragment.appendChild(commentElement);
+    }
+  };
+  createComments(bigPhoto);
+  comments.appendChild(fragment);
 };
 
 renderBigPicture(photos[1]);
 
-// удалаяет шаблонные комментарии
-var comments = BIG_PICTURE.querySelector('.social__comments');
-var comment = BIG_PICTURE.querySelectorAll('.social__comment');
-
-comment.forEach(function (element, z) {
-  comments.removeChild(comment[z]);
-});
-
-// создает комментарий по шаблону
-var createCommets = function (photoComment) {
-  for (var v = 0; v < photos[0].comments.length; v++) {
-    var commentElement = comment[0].cloneNode(true);
-    commentElement.querySelector('.social__picture').setAttribute('src', photoComment.comments[v].avatar);
-    commentElement.querySelector('.social__picture').setAttribute('alt', photoComment.comments[v].name);
-    commentElement.querySelector('.social__text').textContent = photoComment.comments[v].message;
-    fragment.appendChild(commentElement);
-  }
-  return fragment;
-};
-
-createCommets(photos[0]);
-
-comments.appendChild(fragment);
 
