@@ -53,6 +53,8 @@ for (var i = 1; i < MAX_NUMBER; i++) {
     comments: generatorComments()
   });
 }
+// Пустой объект
+var fragment = document.createDocumentFragment();
 // рисует много маленьких картинок
 var renderPicture = function (photo) {
   var pictureElement = PICTURE_TEMPLATE.cloneNode(true);
@@ -64,8 +66,6 @@ var renderPicture = function (photo) {
 
   return pictureElement;
 };
-
-var fragment = document.createDocumentFragment();
 
 for (var g = 0; g < photos.length; g++) {
   fragment.appendChild(renderPicture(photos[g]));
@@ -99,25 +99,25 @@ renderBigPicture(photos[1]);
 
 // удалаяет шаблонные комментарии
 var comments = BIG_PICTURE.querySelector('.social__comments');
-var commentsLi = BIG_PICTURE.querySelectorAll('.social__comment');
-comments.removeChild(commentsLi[0]);
-comments.removeChild(commentsLi[1]);
+var comment = BIG_PICTURE.querySelectorAll('.social__comment');
+
+comment.forEach(function (element, z) {
+  comments.removeChild(comment[z]);
+});
 
 // создает комментарий по шаблону
-var newComments = function (bigPhotoComment) {
-
-  var commentElement = commentsLi[0].cloneNode(true);
-  commentElement.querySelector('.social__picture').setAttribute('src', bigPhotoComment.comments[z].avatar);
-  commentElement.querySelector('.social__picture').setAttribute('alt', bigPhotoComment.comments[z].name);
-  commentElement.querySelector('.social__text').textContent = bigPhotoComment.comments[z].message;
-
-  return commentElement;
+var createCommets = function (photoComment) {
+  for (var v = 0; v < photos[0].comments.length; v++) {
+    var commentElement = comment[0].cloneNode(true);
+    commentElement.querySelector('.social__picture').setAttribute('src', photoComment.comments[v].avatar);
+    commentElement.querySelector('.social__picture').setAttribute('alt', photoComment.comments[v].name);
+    commentElement.querySelector('.social__text').textContent = photoComment.comments[v].message;
+    fragment.appendChild(commentElement);
+  }
+  return fragment;
 };
 
-var z = 0;
-for (var v = 0; v < photos[0].comments.length; v++) {
-  fragment.appendChild(newComments(photos[0]));
-  z++;
-}
+createCommets(photos[0]);
 
 comments.appendChild(fragment);
+
