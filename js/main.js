@@ -7,9 +7,6 @@ var MAX_NUMBER = 26;
 var BIG_PICTURE = document.querySelector('.big-picture');
 var BUTTON_CLOSE_FULLSCREEN = BIG_PICTURE.querySelector('#picture-cancel');
 
-// Массив маленьких картинок для обработчика addEventListener
-var SMALL_PICTURE = document.querySelectorAll('.picture');
-
 var UPLOAD = document.querySelector('#upload-file');
 var FORM = document.querySelector('.img-upload__overlay');
 var BUTTON_CLOSE_UPLOAD = document.querySelector('#upload-cancel');
@@ -20,23 +17,22 @@ var SCALE_VALUE = document.querySelector('.scale__control--value');
 
 var EFFECTS = document.querySelectorAll('.effects__label');
 var EFFECTS_CLASS = document.querySelectorAll('.effects__preview');
-var IMG_EFECT = document.querySelector('.img-upload__preview');
-var BUTTON_EFECT = document.querySelector('.effects__radio');
+var IMG_EFFECT = document.querySelector('.img-upload__preview');
 var SLIDER = document.querySelector('.effect-level__pin');
 var EFFECT_VALUE = document.querySelector('.effect-level__value');
-var EFFECT_VALUES = [];
+var EFFECT_DEPTH = document.querySelector('.effect-level__depth');
+var EFFECT_FIELD = document.querySelector('.effect-level');
 
 var HASH_TAG = document.querySelector('.text__hashtags');
 
 var FILDE_COMMENT = document.querySelector('.text__description');
-var MAX_COMENT_LENGTH = 140;
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 // случайное число от и до
 var randomInteger = function (min, max) {
   var randomNumber = min + Math.random() * (max + 1 - min);
   return Math.floor(randomNumber);
 };
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // генерация коментариев
 var messages = [];
@@ -45,7 +41,7 @@ for (var l = 0; l < MAX_NUMBER; l++) {
   var message = COMMENTS[randomIndexWord];
   messages.push(message);
 }
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // генерация имени
 var names = [];
@@ -54,7 +50,7 @@ for (var n = 0; n < MAX_NUMBER; n++) {
   var nameUser = NAMES[randomIndexName];
   names.push(nameUser);
 }
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // создание коментраиев
 var generatorComments = function () {
@@ -69,7 +65,7 @@ var generatorComments = function () {
   }
   return comments;
 };
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // массив вывода фото
 var photos = [];
@@ -81,11 +77,11 @@ for (var i = 1; i < MAX_NUMBER; i++) {
     comments: generatorComments()
   });
 }
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // Пустой объект
 var fragment = document.createDocumentFragment();
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // рисует много маленьких картинок
 var renderPicture = function (photo) {
@@ -104,7 +100,7 @@ for (var g = 0; g < photos.length; g++) {
 }
 
 PICTURES_CONTAINER.appendChild(fragment);
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 
 // при нажатии esc проверять обработчик
@@ -114,49 +110,60 @@ var onPopupEscPress = function (evt) {
     closePopup();
   }
 };
-//--------------------------------------------------------//
+// --------------------------------------------------------//
+
+
+// Массив маленьких картинок для обработчика addEventListener
+var smallPictures = document.querySelectorAll('.picture');
 
 // функция открытия
 var openPopup = function () {
   // Показать окно
- BIG_PICTURE.classList.remove('hidden');
+  BIG_PICTURE.classList.remove('hidden');
 
   // Добавить обработчики для закрытия
   document.addEventListener('keydown', onPopupEscPress);
-};
-// блокирует прокрутку фотографий на фоне
+  // блокирует прокрутку фотографий на фоне
   document.body.classList.add('modal-open');
-//--------------------------------------------------------//
+};
+// --------------------------------------------------------//
 
 // функция закрытия
 var closePopup = function () {
   // Скрыть окно
-  BIG_PICTURE.classList.add('hidden');;
+  BIG_PICTURE.classList.add('hidden');
 
   // Удалить обработчики для закрытия
   document.removeEventListener('keydown', onPopupEscPress);
-   // разблокирует прокрутку фотографий на фоне
+  // разблокирует прокрутку фотографий на фоне
   document.body.classList.remove('modal-open');
 };
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
- // активация окна показа большой картинки клик, доделать на каждую картинку
-var showFullPicture = function (SMALL_PICTURE, photos) {
-SMALL_PICTURE.addEventListener('click', function () {
-  openPopup();
-  renderBigPicture(photos);
-});
+// активация окна показа большой картинки клик
+var showFullPicture = function (pictures, photo) {
+  pictures.addEventListener('click', function () {
+    openPopup();
+    renderBigPicture(photo);
+  });
+
+  pictures.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      openPopup();
+      renderBigPicture(photo);
+    }
+  });
+};
+for (var b = 0; b < smallPictures.length; b++) {
+  showFullPicture(smallPictures[b], photos[b]);
 }
-for (var b = 0; b < SMALL_PICTURE.length; b++) {
-  showFullPicture(SMALL_PICTURE[b], photos[b]);
-}
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // Деактивация окна установок клик
 BUTTON_CLOSE_FULLSCREEN.addEventListener('click', function () {
   closePopup();
 });
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // Большая картинка
 var renderBigPicture = function (bigPhoto) {
@@ -193,7 +200,7 @@ var renderBigPicture = function (bigPhoto) {
   createComments(bigPhoto);
   comments.appendChild(fragment);
 };
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // обработка формы загрузки картинок на сайт
 var onUploadEscPress = function (evt) {
@@ -207,57 +214,60 @@ var openUpload = function () {
   FORM.classList.remove('hidden');
   // блокирует прокрутку фотографий на фоне
   document.body.classList.add('modal-open');
-}
+  // сбрасывает масштаб картинки по умолчанию 100%
+  IMG_EFFECT.style.transform = 'scale(1)';
+  SCALE_VALUE.value = 100 + '%';
+  document.addEventListener('keydown', onUploadEscPress);
+};
 
 var closeUpload = function () {
   FORM.classList.add('hidden');
   // блокирует прокрутку фотографий на фоне
   document.body.classList.remove('modal-open');
-}
+};
 
 UPLOAD.addEventListener('change', function () {
   openUpload();
+  onloadUpload();
+  reset();
 });
 
 BUTTON_CLOSE_UPLOAD.addEventListener('click', function () {
-  closeUpload()
+  closeUpload();
+  document.removeEventListener('keydown', onUploadEscPress);
 });
-document.addEventListener('keydown', onUploadEscPress);
-//--------------------------------------------------------//
+
+// --------------------------------------------------------//
 
 // Масштаб картинки
-SCALE_VALUE.value = 100 + '%';
 
-var smaller = function(){
-  var inputScale = parseInt(SCALE_VALUE.value)
-  for (var b = inputScale; b > 25; b--){
-  var outputScale = inputScale - 25;
-  SCALE_VALUE.value = outputScale + '%';
+var minimization = function () {
+  var inputScale = parseInt(SCALE_VALUE.value, 10);
+  var a = 25;
+  if (inputScale > a) {
+    var outputScale = inputScale - 25;
+    SCALE_VALUE.value = outputScale + '%';
   }
   var transform = outputScale / 100;
-  IMG_EFECT.style.transform = 'scale(' + transform + ')';
+  IMG_EFFECT.style.transform = 'scale(' + transform + ')';
+};
 
-}
-var bigger = function(){
-  var inputScale = parseInt(SCALE_VALUE.value)
-  for (var n = inputScale; n < 100; n++){
-  var outputScale = inputScale + 25;
-  SCALE_VALUE.value = outputScale + '%';
+var maximization = function () {
+  var inputScale = parseInt(SCALE_VALUE.value, 10);
+  var q = 100;
+  if (inputScale < q) {
+    var outputScale = inputScale + 25;
+    SCALE_VALUE.value = outputScale + '%';
   }
   var transform = outputScale / 100;
-  IMG_EFECT.style.transform = 'scale(' + transform + ')';
+  IMG_EFFECT.style.transform = 'scale(' + transform + ')';
+};
 
-}
+BUTTON_SMALL.addEventListener('click', minimization);
 
-BUTTON_SMALL.addEventListener('click', function () {
-  smaller();
-  });
+BUTTON_BIG.addEventListener('click', maximization);
 
-BUTTON_BIG.addEventListener('click', function () {
-  bigger();
- });
-
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
 // Движение ползунка эфектов
 SLIDER.addEventListener('mousedown', function (evt) {
@@ -278,29 +288,25 @@ SLIDER.addEventListener('mousedown', function (evt) {
     };
 
     SLIDER.style.left = (SLIDER.offsetLeft - shift.x) + 'px';
+
     // получение числовго значения ползунка
-    var data = parseInt(SLIDER.style.left) / 450;
+    var data = parseInt(SLIDER.style.left, 10) / 450;
+
     // ограничение ползунка
-    if (data < 0){
+    if (data < 0) {
       onMouseUp();
-    } else if (data > 1){
+    } else if (data > 1) {
       onMouseUp();
     }
 
     // значения ползунка для каждого эффекта
-    var chrome = data;
-    var sepia = data;
-    var marvin = parseInt(data*100);
-    var fobos = data*3;
-    var zoy = parseInt((data+1) + data);
+    setEffectvalue(data);
 
-    //массив значений ползунка
-    EFFECT_VALUES = [chrome, sepia, marvin, fobos, zoy];
+    // глубина эффекта полоска
+    EFFECT_DEPTH.style.width = SLIDER.style.left;
   };
 
-   var onMouseUp = function (upEvt) {
-    //upEvt.preventDefault();
-    setEffectvalue();
+  var onMouseUp = function () {
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
   };
@@ -309,79 +315,103 @@ SLIDER.addEventListener('mousedown', function (evt) {
   document.addEventListener('mouseup', onMouseUp);
 
 });
-//--------------------------------------------------------//
+// --------------------------------------------------------//
 
-//присвоение значений ползунка выбранному эффекту
-var setEffectvalue = function () {
-  switch(IMG_EFECT.classList.value){
-  case EFFECTS_CLASS[1].classList[1]:
-    EFFECT_VALUE.value = EFFECT_VALUES[0];
-    IMG_EFECT.style.filter = 'grayscale(' + EFFECT_VALUE.value + ')';
-  break;
-  case EFFECTS_CLASS[2].classList[1]:
-    EFFECT_VALUE.value = EFFECT_VALUES[1];
-    IMG_EFECT.style.filter = 'sepia(' + EFFECT_VALUE.value + ')';
-  break;
-  case EFFECTS_CLASS[3].classList[1]:
-    EFFECT_VALUE.value = EFFECT_VALUES[2];
-    IMG_EFECT.style.filter = 'invert(' + EFFECT_VALUE.value + '%' + ')';
-  break;
-  case EFFECTS_CLASS[4].classList[1]:
-    EFFECT_VALUE.value = EFFECT_VALUES[3];
-    IMG_EFECT.style.filter = 'blur(' + EFFECT_VALUE.value + 'px' + ')';
-  break;
-  case EFFECTS_CLASS[5].classList[1]:
-    EFFECT_VALUE.value = EFFECT_VALUES[4];
-    IMG_EFECT.style.filter = 'brightness(' + EFFECT_VALUE.value + ')';
-  break;
-  default:
-  EFFECT_VALUE.value = 0;
-  IMG_EFECT.style.filter = 'none';
-  break;
+// присвоение значений ползунка выбранному эффекту
+var setEffectvalue = function (data) {
+  switch (IMG_EFFECT.classList[1]) {
+    case EFFECTS_CLASS[1].classList[1]:
+      EFFECT_VALUE.value = data;
+      IMG_EFFECT.style.filter = 'grayscale(' + EFFECT_VALUE.value + ')';
+      break;
+    case EFFECTS_CLASS[2].classList[1]:
+      EFFECT_VALUE.value = data;
+      IMG_EFFECT.style.filter = 'sepia(' + EFFECT_VALUE.value + ')';
+      break;
+    case EFFECTS_CLASS[3].classList[1]:
+      EFFECT_VALUE.value = parseInt(data * 100, 10);
+      IMG_EFFECT.style.filter = 'invert(' + EFFECT_VALUE.value + '%' + ')';
+      break;
+    case EFFECTS_CLASS[4].classList[1]:
+      EFFECT_VALUE.value = data * 3;
+      IMG_EFFECT.style.filter = 'blur(' + EFFECT_VALUE.value + 'px' + ')';
+      break;
+    case EFFECTS_CLASS[5].classList[1]:
+      EFFECT_VALUE.value = parseInt((data + 1) + data, 10);
+      IMG_EFFECT.style.filter = 'brightness(' + EFFECT_VALUE.value + ')';
+      break;
+    default:
+      EFFECT_VALUE.value = 0;
+      IMG_EFFECT.style.filter = 'none';
+      break;
   }
 };
-//--------------------------------------------------------//
+
+// --------------------------------------------------------//
 
 // Смена фильтра картинки
-var changeEfects = function (EFFECT, EFFECTS_CLASS){
-  EFFECTS[n].onclick = function () {
-    if (IMG_EFECT.classList.value != EFFECTS_CLASS.classList[1]){
-    IMG_EFECT.classList.value = '';
-    IMG_EFECT.classList.add(EFFECTS_CLASS.classList[1]);
-    };
-  }
-}
-  for (var n = 0; n < EFFECTS.length; n++) {
-  changeEfects(EFFECTS[n],EFFECTS_CLASS[n]);
+var reset = function () {
+  IMG_EFFECT.style.filter = 'none';
+  EFFECT_DEPTH.style.width = 0;
+  SLIDER.style.left = 0;
 };
-//--------------------------------------------------------//
+var onloadUpload = function () {
+  if (IMG_EFFECT.className === 'img-upload__preview') {
+    EFFECT_FIELD.classList.add('hidden');
+  }
+};
+var changeEffects = function (effect, effectClass) {
+  effect.onclick = function () {
+    if (IMG_EFFECT.classList.value !== effectClass.classList[1]) {
+      EFFECT_FIELD.classList.remove('hidden');
+      IMG_EFFECT.classList.value = 'img-upload__preview ';
+      IMG_EFFECT.classList.add(effectClass.classList[1]);
+      reset();
+    }
+    if (IMG_EFFECT.className === 'img-upload__preview effects__preview--none') {
+      EFFECT_FIELD.classList.add('hidden');
+    }
+  };
+};
+for (var r = 0; r < EFFECTS.length; r++) {
+  changeEffects(EFFECTS[r], EFFECTS_CLASS[r]);
+}
+// --------------------------------------------------------//
 
-//валидация хеш тегов
-var hashtags = HASH_TAG;
+// валидация хеш тегов
 // Блокирует escape при фокусе на имени
-hashtags.addEventListener('focus', function () {
+HASH_TAG.addEventListener('focus', function () {
   document.removeEventListener('keydown', onUploadEscPress);
 });
-var validateMethods = {
-  validateInput: function(arrayHashtag){
-    var re = /^#[А-Яа-яA-Za-z0-9]*$/
-    return re.test(arrayHashtag);
-    },
 
-  noMeta: function (arrayHashtag) {
-    return arrayHashtag.some((hashtag) => hashtag.trim() === '#');
+var validateMethods = {
+
+  validateInput: function (arrayHashtag) {
+
+    return arrayHashtag.every(function (hashtag) {
+      var re = /^#[А-Яа-яA-Za-z0-9]*$/;
+      return re.test(hashtag);
+    });
   },
 
-   countExceeded: function (arrayHashtag, maxCount) {
+  noMeta: function (arrayHashtag) {
+    return arrayHashtag.some(function (hashtag) {
+      return hashtag.trim() === '#';
+    });
+  },
+
+  countExceeded: function (arrayHashtag, maxCount) {
     return arrayHashtag.length > maxCount;
   },
 
   lengthExceeded: function (arrayHashtag, maxLength) {
-    return arrayHashtag.some((hashtag) => hashtag.length > maxLength);
+    return arrayHashtag.some(function (hashtag) {
+      return hashtag.length > maxLength;
+    });
   },
 
   isNotSeparated: function (arrayHashtag) {
-    return arrayHashtag.some((hashtag) => {
+    return arrayHashtag.some(function (hashtag) {
       var arrayHash = hashtag.match(/#/g) || [];
       return arrayHash.length !== 1;
     });
@@ -390,7 +420,7 @@ var validateMethods = {
   isNotUnique: function (arrayHashtag) {
     var unique = {};
 
-    return arrayHashtag.some((hashtag) => {
+    return arrayHashtag.some(function (hashtag) {
       var lowerCase = hashtag.toLowerCase();
       var isExist = unique[lowerCase];
 
@@ -407,80 +437,54 @@ var validateMethods = {
 function validateHashtags(hashtags) {
   var array = hashtags.split(' ');
 
-  if (validateMethods.validateInput(array)){
-      console.log('ok');
-    } else {
-      console.log('Error');
-    }
+  if (validateMethods.validateInput(array) === false) {
+    HASH_TAG.setCustomValidity('хеш-тег содержит не допустивые символы');
+    return false;
+  }
 
   if (validateMethods.noMeta(array)) {
-    console.log('хеш-тег не может состоять только из одной решётки');
+    HASH_TAG.setCustomValidity('хеш-тег не может состоять только из одной решётки');
     return false;
   }
 
   if (validateMethods.isNotSeparated(array)) {
-    console.log('хэш-теги разделяются пробелами;');
+    HASH_TAG.setCustomValidity('хэш-теги разделяются пробелами;');
     return false;
   }
 
   if (validateMethods.lengthExceeded(array, 20)) {
-    console.log('максимальная длина одного хэш-тега 20 символов, включая решётку');
+    HASH_TAG.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
     return false;
   }
 
   if (validateMethods.isNotUnique(array)) {
-    console.log('один и тот же хэш-тег не может быть использован дважды');
+    HASH_TAG.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
     return false;
   }
 
   if (validateMethods.countExceeded(array, 5)) {
-    console.log('нельзя указать больше пяти хэш-тегов');
+    HASH_TAG.setCustomValidity('нельзя указать больше пяти хэш-тегов');
     return false;
   }
 
-  console.log('всё в порядке');
+  HASH_TAG.setCustomValidity('');
   return true;
 }
 
-hashtags.onblur = function () {
-  validateHashtags(hashtags.value);
+HASH_TAG.addEventListener('input', function () {
+  validateHashtags(HASH_TAG.value);
   document.addEventListener('keydown', onUploadEscPress);
-};
-//--------------------------------------------------------//
-//Валидация комментария
+});
+// --------------------------------------------------------//
+// Валидация комментария
 
-// Блокирует escape при фокусе на имени
+// Блокирует escape при фокусе на комментарии
 FILDE_COMMENT.addEventListener('focus', function () {
   document.removeEventListener('keydown', onUploadEscPress);
 });
-// Разблокирует escape при фокусе на имени
+// Разблокирует escape при фокусе на комментарии
 FILDE_COMMENT.addEventListener('blur', function () {
   document.addEventListener('keydown', onUploadEscPress);
 });
 
-FILDE_COMMENT.addEventListener('invalid', function () {
-  if (FILDE_COMMENT.validity.tooLong) {
-
-    FILDE_COMMENT.setCustomValidity('Коментарий не должн превышать ' + MAX_COMENT_LENGTH + ' символов');
-
-  } else {
-
-    FILDE_COMMENT.setCustomValidity('');
-  }
-});
-
-
-FILDE_COMMENT.addEventListener('input', function () {
-  var valueLength = FILDE_COMMENT.value.length;
-
-  if (valueLength > MAX_COMENT_LENGTH) {
-
-    FILDE_COMMENT.setCustomValidity('Удалите лишние ' + (valueLength - MAX_COMENT_LENGTH) + ' симв.');
-
-  } else {
-
-    FILDE_COMMENT.setCustomValidity('');
-  }
-});
-
-//--------------------------------------------------------//
+// --------------------------------------------------------//
