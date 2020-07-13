@@ -494,7 +494,7 @@ FILDE_COMMENT.addEventListener('blur', function () {
 
 FILDE_COMMENT.addEventListener('invalid', function () {
   if (FILDE_COMMENT.validity.tooLong) {
-    FILDE_COMMENT.setCustomValidity('Имя не должно превышать 140-ка символов');
+    FILDE_COMMENT.setCustomValidity('Имя не должно превышать 140 символов');
   }
 });
 // --------------------------------------------------------//
