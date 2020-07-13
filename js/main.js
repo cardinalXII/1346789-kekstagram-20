@@ -207,6 +207,8 @@ var onUploadEscPress = function (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeUpload();
+    FILDE_COMMENT.value = '';
+    HASH_TAG.value = '';
   }
 };
 
@@ -438,7 +440,7 @@ function validateHashtags(hashtags) {
   var array = hashtags.split(' ');
 
   if (validateMethods.validateInput(array) === false) {
-    HASH_TAG.setCustomValidity('хеш-тег содержит не допустивые символы');
+    HASH_TAG.setCustomValidity('хеш-тег содержит не допустивые символы или не начинается на символ "#"');
     return false;
   }
 
@@ -473,6 +475,9 @@ function validateHashtags(hashtags) {
 
 HASH_TAG.addEventListener('input', function () {
   validateHashtags(HASH_TAG.value);
+  document.removeEventListener('keydown', onUploadEscPress);
+});
+HASH_TAG.addEventListener('blur', function () {
   document.addEventListener('keydown', onUploadEscPress);
 });
 // --------------------------------------------------------//
@@ -487,4 +492,9 @@ FILDE_COMMENT.addEventListener('blur', function () {
   document.addEventListener('keydown', onUploadEscPress);
 });
 
+FILDE_COMMENT.addEventListener('invalid', function () {
+  if (FILDE_COMMENT.validity.tooLong) {
+    FILDE_COMMENT.setCustomValidity('Имя не должно превышать 140 символов');
+  }
+});
 // --------------------------------------------------------//
