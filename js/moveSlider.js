@@ -31,7 +31,7 @@
       }
 
       // значения ползунка для каждого эффекта
-      window.setEffectvalue(data);
+      window.setEffects.setEffectvalue(data);
 
       // глубина эффекта полоска
       window.constants.effectDepth.style.width = window.constants.slider.style.left;

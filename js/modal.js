@@ -7,9 +7,9 @@
         evt.preventDefault();
         window.modal.closePopup();
       }
-    }
-  // --------------------------------------------------------//
-  // обработка формы загрузки картинок на сайт
+    },
+    // --------------------------------------------------------//
+    // обработка формы загрузки картинок на сайт
     onUploadEscPress: function (evt) {
       if (evt.key === 'Escape') {
         evt.preventDefault();
@@ -17,7 +17,7 @@
         window.constants.fildeComment.value = '';
         window.constants.hashTag.value = '';
       }
-    }
+    },
 
     // функция открытия
     openPopup: function () {
@@ -28,7 +28,7 @@
       document.addEventListener('keydown', window.modal.onPopupEscPress);
       // блокирует прокрутку фотографий на фоне
       document.body.classList.add('modal-open');
-    }
+    },
 
     openUpload: function () {
       window.constants.form.classList.remove('hidden');
@@ -38,7 +38,7 @@
       window.constants.imgEffect.style.transform = 'scale(1)';
       window.constants.scaleValue.value = 100 + '%';
       document.addEventListener('keydown', window.modal.onUploadEscPress);
-    }
+    },
 
     // функция закрытия
     closePopup: function () {
@@ -49,23 +49,22 @@
       document.removeEventListener('keydown', window.modal.onPopupEscPress);
       // разблокирует прокрутку фотографий на фоне
       document.body.classList.remove('modal-open');
-    }
+    },
 
     closeUpload: function () {
       window.constants.form.classList.add('hidden');
       // блокирует прокрутку фотографий на фоне
       document.body.classList.remove('modal-open');
-    }
+    },
+  };
+  window.constants.upload.addEventListener('change', function () {
+    window.modal.openUpload();
+    window.setEffects.onloadUpload();
+    window.setEffects.reset();
+  });
 
-    window.constants.upload.addEventListener('change', function () {
-      window.modal.openUpload();
-      window.modal.onloadUpload();
-      window.setEffects.reset();
-    })
-
-    window.constants.buttonCloseUpload.addEventListener('click', function () {
-      window.modal.closeUpload();
-      document.removeEventListener('keydown', window.modal.onUploadEscPress);
-    })
-  }
+  window.constants.buttonCloseUpload.addEventListener('click', function () {
+    window.modal.closeUpload();
+    document.removeEventListener('keydown', window.modal.onUploadEscPress);
+  });
 })();
