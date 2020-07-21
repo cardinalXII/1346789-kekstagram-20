@@ -2,11 +2,7 @@
 // валидация хеш тегов
 // Блокирует escape при фокусе на имени
 (function () {
-  window.HASH_TAG.addEventListener('focus', function () {
-    document.removeEventListener('keydown', window.onUploadEscPress);
-  });
-
-  var validateMethods = {
+  window.validate = {
 
     validateInput: function (arrayHashtag) {
 
@@ -54,68 +50,69 @@
         }
       });
     },
+
+    validateHashtags: function (hashtags) {
+      var array = hashtags.split(' ');
+
+      if (window.validate.validateInput(array) === false) {
+        window.constants.hashTag.setCustomValidity('хеш-тег содержит не допустивые символы или не начинается на символ "#"');
+        return false;
+      }
+
+      if (window.validate.noMeta(array)) {
+        window.constants.hashTag.setCustomValidity('хеш-тег не может состоять только из одной решётки');
+        return false;
+      }
+
+      if (window.validate.isNotSeparated(array)) {
+        window.constants.hashTag.setCustomValidity('хэш-теги разделяются пробелами;');
+        return false;
+      }
+
+      if (window.validate.lengthExceeded(array, 20)) {
+        window.constants.hashTag.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
+        return false;
+      }
+
+      if (window.validate.isNotUnique(array)) {
+        window.constants.hashTag.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
+        return false;
+      }
+
+      if (window.validate.countExceeded(array, 5)) {
+        window.constants.hashTag.setCustomValidity('нельзя указать больше пяти хэш-тегов');
+        return false;
+      }
+
+      window.constants.hashTag.setCustomValidity('');
+      return true;
+    }
   };
-
-  function validateHashtags(hashtags) {
-    var array = hashtags.split(' ');
-
-    if (validateMethods.validateInput(array) === false) {
-      window.HASH_TAG.setCustomValidity('хеш-тег содержит не допустивые символы или не начинается на символ "#"');
-      return false;
-    }
-
-    if (validateMethods.noMeta(array)) {
-      window.HASH_TAG.setCustomValidity('хеш-тег не может состоять только из одной решётки');
-      return false;
-    }
-
-    if (validateMethods.isNotSeparated(array)) {
-      window.HASH_TAG.setCustomValidity('хэш-теги разделяются пробелами;');
-      return false;
-    }
-
-    if (validateMethods.lengthExceeded(array, 20)) {
-      window.HASH_TAG.setCustomValidity('максимальная длина одного хэш-тега 20 символов, включая решётку');
-      return false;
-    }
-
-    if (validateMethods.isNotUnique(array)) {
-      window.HASH_TAG.setCustomValidity('один и тот же хэш-тег не может быть использован дважды');
-      return false;
-    }
-
-    if (validateMethods.countExceeded(array, 5)) {
-      window.HASH_TAG.setCustomValidity('нельзя указать больше пяти хэш-тегов');
-      return false;
-    }
-
-    window.HASH_TAG.setCustomValidity('');
-    return true;
-  }
-
-  window.HASH_TAG.addEventListener('input', function () {
-    validateHashtags(window.HASH_TAG.value);
-    document.removeEventListener('keydown', window.onUploadEscPress);
+  window.constants.hashTag.addEventListener('focus', function () {
+    document.removeEventListener('keydown', window.modal.onUploadEscPress);
   });
-  window.HASH_TAG.addEventListener('blur', function () {
-    document.addEventListener('keydown', window.onUploadEscPress);
+  window.constants.hashTag.addEventListener('input', function () {
+    window.validate.validateHashtags(window.constants.hashTag.value);
+    document.removeEventListener('keydown', window.modal.onUploadEscPress);
   });
-})();
-// --------------------------------------------------------//
-// Валидация комментария
-(function () {
+  window.constants.hashTag.addEventListener('blur', function () {
+    document.addEventListener('keydown', window.modal.onUploadEscPress);
+  });
+
+  // --------------------------------------------------------//
+  // Валидация комментария
   // Блокирует escape при фокусе на комментарии
-  window.FILDE_COMMENT.addEventListener('focus', function () {
-    document.removeEventListener('keydown', window.onUploadEscPress);
+  window.constants.fildeComment.addEventListener('focus', function () {
+    document.removeEventListener('keydown', window.modal.onUploadEscPress);
   });
   // Разблокирует escape при фокусе на комментарии
-  window.FILDE_COMMENT.addEventListener('blur', function () {
-    document.addEventListener('keydown', window.onUploadEscPress);
+  window.constants.fildeComment.addEventListener('blur', function () {
+    document.addEventListener('keydown', window.modal.onUploadEscPress);
   });
 
-  window.FILDE_COMMENT.addEventListener('invalid', function () {
-    if (window.FILDE_COMMENT.validity.tooLong) {
-      window.FILDE_COMMENT.setCustomValidity('Имя не должно превышать 140-ка символов');
+  window.constants.fildeComment.addEventListener('invalid', function () {
+    if (window.constants.fildeComment.validity.tooLong) {
+      window.constants.fildeComment.setCustomValidity('Имя не должно превышать 140-ка символов');
     }
   });
 })();

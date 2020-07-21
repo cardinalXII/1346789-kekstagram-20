@@ -1,7 +1,7 @@
 'use strict';
 // Движение ползунка эфектов
 (function () {
-  window.SLIDER.addEventListener('mousedown', function (evt) {
+  window.constants.slider.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startCoords = {
       x: evt.clientX,
@@ -18,10 +18,10 @@
         x: moveEvt.clientX,
       };
 
-      window.SLIDER.style.left = (window.SLIDER.offsetLeft - shift.x) + 'px';
+      window.constants.slider.style.left = (window.constants.slider.offsetLeft - shift.x) + 'px';
 
       // получение числовго значения ползунка
-      var data = parseInt(window.SLIDER.style.left, 10) / 450;
+      var data = parseInt(window.constants.slider.style.left, 10) / window.constants.maxSize;
 
       // ограничение ползунка
       if (data < 0) {
@@ -34,7 +34,7 @@
       window.setEffectvalue(data);
 
       // глубина эффекта полоска
-      window.EFFECT_DEPTH.style.width = window.SLIDER.style.left;
+      window.constants.effectDepth.style.width = window.constants.slider.style.left;
     };
 
     var onMouseUp = function () {

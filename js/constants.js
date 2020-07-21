@@ -7,6 +7,11 @@
   var PICTURE_TEMPLATE = document.querySelector('#picture').content.querySelector('.picture');
   var PICTURES_CONTAINER = document.querySelector('.pictures');
   var MAX_NUMBER = 26;
+  var MIN_LIKES = 15;
+  var MAX_LIKES = 200;
+  var MAX_SIZE = 450;
+  var MIN_ZOOM = 25;
+  var MAX_ZOOM = 100;
   var BIG_PICTURE = document.querySelector('.big-picture');
   var BUTTON_CLOSE_FULLSCREEN = BIG_PICTURE.querySelector('#picture-cancel');
 
@@ -31,32 +36,68 @@
   var FILDE_COMMENT = document.querySelector('.text__description');
 
   // Пустой объект
-  var fragment = document.createDocumentFragment();
+  var FRAGMENT = document.createDocumentFragment();
   // --------------------------------------------------------//
 
-  window.BIG_PICTURE = BIG_PICTURE;
-  window.FORM = FORM;
-  window.COMMENTS = COMMENTS;
-  window.NAMES = NAMES;
-  window.MAX_NUMBER = MAX_NUMBER;
-  window.PICTURE_TEMPLATE = PICTURE_TEMPLATE;
-  window.PICTURES_CONTAINER = PICTURES_CONTAINER;
-  window.BUTTON_CLOSE_FULLSCREEN = BUTTON_CLOSE_FULLSCREEN;
-  window.UPLOAD = UPLOAD;
-  window.BUTTON_CLOSE_UPLOAD = BUTTON_CLOSE_UPLOAD;
-  window.BUTTON_SMALL = BUTTON_SMALL;
-  window.BUTTON_BIG = BUTTON_BIG;
-  window.SLIDER = SLIDER;
-  window.EFFECTS = EFFECTS;
-  window.EFFECTS_CLASS = EFFECTS_CLASS;
-  window.HASH_TAG = HASH_TAG;
-  window.FILDE_COMMENT = FILDE_COMMENT;
-  window.IMG_EFFECT = IMG_EFFECT;
-  window.SCALE_VALUE = SCALE_VALUE;
-  window.EFFECT_FIELD = EFFECT_FIELD;
-  window.EFFECT_DEPTH = EFFECT_DEPTH;
-  window.EFFECT_VALUE = EFFECT_VALUE;
-  window.fragment = fragment;
+  window.constants = {
+
+    bigPicture: BIG_PICTURE,
+
+    form: FORM,
+
+    comments: COMMENTS,
+
+    name: NAMES,
+
+    maxNumber: MAX_NUMBER,
+
+    minLikes: MIN_LIKES,
+
+    maxLikes: MAX_LIKES,
+
+    minZoom: MIN_ZOOM,
+
+    maxZoom: MAX_ZOOM,
+
+    maxSize: MAX_SIZE,
+
+    pictureTemlate: PICTURE_TEMPLATE,
+
+    picturesContainer: PICTURES_CONTAINER,
+
+    buttonCloseFullscreen: BUTTON_CLOSE_FULLSCREEN,
+
+    upload: UPLOAD,
+
+    buttonCloseUpload: BUTTON_CLOSE_UPLOAD,
+
+    buttonSmall: BUTTON_SMALL,
+
+    buttonBig: BUTTON_BIG,
+
+    slider: SLIDER,
+
+    effects: EFFECTS,
+
+    effectsClass: EFFECTS_CLASS,
+
+    hashTag: HASH_TAG,
+
+    fildeComment: FILDE_COMMENT,
+
+    imgEffect: IMG_EFFECT,
+
+    scaleValue: SCALE_VALUE,
+
+    effectField: EFFECT_FIELD,
+
+    effectDepth: EFFECT_DEPTH,
+
+    effectValue: EFFECT_VALUE,
+
+    fragment: FRAGMENT,
+  };
 })();
 
 // --------------------------------------------------------//
+
