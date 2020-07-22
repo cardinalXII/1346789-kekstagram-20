@@ -1,18 +1,19 @@
 'use strict';
 (function () {
+  window.constants.effectValue.value = 3;
   // массив вывода фото
   var photos = [];
   for (var i = 1; i < window.constants.maxNumber; i++) {
     photos.push({
       url: 'photos/' + i + '.jpg',
-      description: 'Класная фотка',
+      description: 'Классная фотка',
       likes: window.creatingComments.randomInteger(window.constants.minLikes, window.constants.maxLikes),
       comments: window.creatingComments.creatingComment()
     });
   }
   // рисует много маленьких картинок
   var renderPicture = function (photo) {
-    var pictureElement = window.constants.pictureTemlate.cloneNode(true);
+    var pictureElement = window.constants.pictureTemplate.cloneNode(true);
 
     pictureElement.querySelector('img').setAttribute('src', photo.url);
     pictureElement.querySelector('img').setAttribute('alt', photo.description);
@@ -71,7 +72,7 @@
     commentCount.classList.add('hidden');
     commentsLoader.classList.add('hidden');
 
-    // удалаяет шаблонные комментарии
+    // удаляет шаблонные комментарии
     var comments = window.constants.bigPicture.querySelector('.social__comments');
     var commentItems = window.constants.bigPicture.querySelectorAll('.social__comment');
 
