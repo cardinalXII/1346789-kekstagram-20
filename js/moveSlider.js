@@ -25,9 +25,11 @@
 
       // ограничение ползунка
       if (data < 0) {
+        window.constants.slider.style.left = 0 + 'px';
         onMouseUp();
       } else if (data > 1) {
         onMouseUp();
+        window.constants.slider.style.left = window.constants.maxSize + 'px';
       }
 
       // значения ползунка для каждого эффекта
