@@ -92,8 +92,10 @@
     document.removeEventListener('keydown', window.modal.onUploadEscPress);
   });
   window.constants.hashTag.addEventListener('input', function () {
+    if(window.constants.hashTag.value !== ''){
     window.validate.validateHashtags(window.constants.hashTag.value);
     document.removeEventListener('keydown', window.modal.onUploadEscPress);
+    } else {window.constants.hashTag.setCustomValidity('');}
   });
   window.constants.hashTag.addEventListener('blur', function () {
     document.addEventListener('keydown', window.modal.onUploadEscPress);
