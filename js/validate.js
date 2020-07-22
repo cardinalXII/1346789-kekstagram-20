@@ -55,7 +55,7 @@
       var array = hashtags.split(' ');
 
       if (window.validate.validateInput(array) === false) {
-        window.constants.hashTag.setCustomValidity('хеш-тег содержит не допустивые символы или не начинается на символ "#"');
+        window.constants.hashTag.setCustomValidity('хеш-тег содержит не допустимые символы или не начинается на символ "#"');
         return false;
       }
 
@@ -102,17 +102,17 @@
   // --------------------------------------------------------//
   // Валидация комментария
   // Блокирует escape при фокусе на комментарии
-  window.constants.fildeComment.addEventListener('focus', function () {
+  window.constants.fieldComment.addEventListener('focus', function () {
     document.removeEventListener('keydown', window.modal.onUploadEscPress);
   });
   // Разблокирует escape при фокусе на комментарии
-  window.constants.fildeComment.addEventListener('blur', function () {
+  window.constants.fieldComment.addEventListener('blur', function () {
     document.addEventListener('keydown', window.modal.onUploadEscPress);
   });
 
-  window.constants.fildeComment.addEventListener('invalid', function () {
-    if (window.constants.fildeComment.validity.tooLong) {
-      window.constants.fildeComment.setCustomValidity('Имя не должно превышать 140-ка символов');
+  window.constants.fieldComment.addEventListener('invalid', function () {
+    if (window.constants.fieldComment.validity.tooLong) {
+      window.constants.fieldComment.setCustomValidity('Имя не должно превышать 140-ка символов');
     }
   });
 })();

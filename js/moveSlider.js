@@ -1,5 +1,5 @@
 'use strict';
-// Движение ползунка эфектов
+// Движение ползунка эффектов
 (function () {
   window.constants.slider.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -20,7 +20,7 @@
 
       window.constants.slider.style.left = (window.constants.slider.offsetLeft - shift.x) + 'px';
 
-      // получение числовго значения ползунка
+      // получение числового значения ползунка
       var data = parseInt(window.constants.slider.style.left, 10) / window.constants.maxSize;
 
       // ограничение ползунка
@@ -33,7 +33,7 @@
       }
 
       // значения ползунка для каждого эффекта
-      window.setEffects.setEffectvalue(data);
+      window.setEffects.setEffectValue(data);
 
       // глубина эффекта полоска
       window.constants.effectDepth.style.width = window.constants.slider.style.left;

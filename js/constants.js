@@ -61,7 +61,7 @@
 
     maxSize: MAX_SIZE,
 
-    pictureTemlate: PICTURE_TEMPLATE,
+    pictureTemplate: PICTURE_TEMPLATE,
 
     picturesContainer: PICTURES_CONTAINER,
 
@@ -83,7 +83,7 @@
 
     hashTag: HASH_TAG,
 
-    fildeComment: FILDE_COMMENT,
+    fieldComment: FILDE_COMMENT,
 
     imgEffect: IMG_EFFECT,
 

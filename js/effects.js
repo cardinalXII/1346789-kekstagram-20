@@ -22,7 +22,7 @@
           window.setEffects.reset();
         }
         if (window.constants.imgEffect.className === 'img-upload__preview effects__preview--none') {
-          window.constants.ieffectField.classList.add('hidden');
+          window.constants.effectField.classList.add('hidden');
         }
       };
     },
@@ -30,7 +30,7 @@
     // --------------------------------------------------------//
 
     // присвоение значений ползунка выбранному эффекту
-    setEffectvalue: function (data) {
+    setEffectValue: function (data) {
       switch (window.constants.imgEffect.classList[1]) {
         case window.constants.effectsClass[1].classList[1]:
           window.constants.effectValue.value = data;
@@ -49,7 +49,7 @@
           window.constants.imgEffect.style.filter = 'blur(' + window.constants.effectValue.value + 'px' + ')';
           break;
         case window.constants.effectsClass[5].classList[1]:
-          window.constants.effectValue.value = parseInt((data + 1) + data, 10);
+          window.constants.effectValue.value = (data + 1) + data;
           window.constants.imgEffect.style.filter = 'brightness(' + window.constants.effectValue.value + ')';
           break;
         default:
