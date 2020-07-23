@@ -11,7 +11,7 @@
 
     return pictureElement;
   };
-  window.photoX = function (photos) {
+  window.creatingphotoX = function (photos) {
     for (var g = 0; g < photos.length; g++) {
       window.constants.fragment.appendChild(renderPicture(photos[g]));
     }

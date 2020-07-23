@@ -8,7 +8,7 @@
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        window.photoX(xhr.response);
+        window.creatingphotoX(xhr.response);
       }
     });
 
