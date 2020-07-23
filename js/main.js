@@ -1,16 +1,5 @@
 'use strict';
 (function () {
-  window.constants.effectValue.value = 3;
-  // массив вывода фото
-  var photos = [];
-  for (var i = 1; i < window.constants.maxNumber; i++) {
-    photos.push({
-      url: 'photos/' + i + '.jpg',
-      description: 'Классная фотка',
-      likes: window.creatingComments.randomInteger(window.constants.minLikes, window.constants.maxLikes),
-      comments: window.creatingComments.creatingComment()
-    });
-  }
   // рисует много маленьких картинок
   var renderPicture = function (photo) {
     var pictureElement = window.constants.pictureTemplate.cloneNode(true);
@@ -22,12 +11,19 @@
 
     return pictureElement;
   };
+  window.photoX = function (photos) {
+    for (var g = 0; g < photos.length; g++) {
+      window.constants.fragment.appendChild(renderPicture(photos[g]));
+    }
 
-  for (var g = 0; g < photos.length; g++) {
-    window.constants.fragment.appendChild(renderPicture(photos[g]));
-  }
+    window.constants.picturesContainer.appendChild(window.constants.fragment);
 
-  window.constants.picturesContainer.appendChild(window.constants.fragment);
+    var smallPictures = document.querySelectorAll('.picture');
+
+    for (var b = 0; b < smallPictures.length; b++) {
+      showFullPicture(smallPictures[b], photos[b]);
+    }
+  };
   // --------------------------------------------------------//
 
   // активация окна показа большой картинки клик
@@ -47,10 +43,7 @@
   // --------------------------------------------------------//
 
   // Массив маленьких картинок для обработчика addEventListener
-  var smallPictures = document.querySelectorAll('.picture');
-  for (var b = 0; b < smallPictures.length; b++) {
-    showFullPicture(smallPictures[b], photos[b]);
-  }
+
   // Деактивация Большой картинки
   window.constants.buttonCloseFullscreen.addEventListener('click', function () {
     window.modal.closePopup();
