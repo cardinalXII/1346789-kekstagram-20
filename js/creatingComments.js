@@ -39,7 +39,7 @@
 
   window.creatingPhotos = {
     // массив вывода фото
-    randomPictures: function () {
+    randomingPictures: function () {
       var pictures = [];
       for (var i = 1; i < window.constants.maxNumber; i++) {
         pictures.push({
