@@ -36,5 +36,21 @@
       return comments;
     }
   };
+
+  window.creatingPhotos = {
+    // массив вывода фото
+    randomPictures: function () {
+      var pictures = [];
+      for (var i = 1; i < window.constants.maxNumber; i++) {
+        pictures.push({
+          url: 'photos/' + i + '.jpg',
+          description: 'Классная фотка',
+          likes: window.creatingComments.randomInteger(window.constants.minLikes, window.constants.maxLikes),
+          comments: window.creatingComments.creatingComment()
+        });
+      }
+      return pictures;
+    }
+  };
 })();
 // --------------------------------------------------------//
