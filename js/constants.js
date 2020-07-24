@@ -34,9 +34,11 @@
   var HASH_TAG = document.querySelector('.text__hashtags');
 
   var FILDE_COMMENT = document.querySelector('.text__description');
-
+  var FORM_UPLOAD = document.querySelector('.img-upload__form');
   // Пустой объект
   var FRAGMENT = document.createDocumentFragment();
+
+  var ERROR = document.querySelector('#error');
   // --------------------------------------------------------//
 
   window.constants = {
@@ -96,6 +98,10 @@
     effectValue: EFFECT_VALUE,
 
     fragment: FRAGMENT,
+
+    formUpload: FORM_UPLOAD,
+
+    error: ERROR,
   };
 })();
 

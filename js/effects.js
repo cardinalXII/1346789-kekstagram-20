@@ -2,24 +2,25 @@
 (function () {
   window.setEffects = {
   // Смена фильтра картинки
-    reset: function () {
+    resetEffects: function () {
       window.constants.imgEffect.style.filter = 'none';
       window.constants.effectDepth.style.width = 0;
       window.constants.slider.style.left = 0;
     },
 
     onloadUpload: function () {
-      if (window.constants.imgEffect.className === 'img-upload__preview') {
+      if (window.constants.imgEffect.className === 'img-upload__preview effects__preview--none') {
         window.constants.effectField.classList.add('hidden');
       }
     },
+
     changeEffects: function (effect, effectClass) {
       effect.onclick = function () {
         if (window.constants.imgEffect.classList.value !== effectClass.classList[1]) {
           window.constants.effectField.classList.remove('hidden');
           window.constants.imgEffect.classList.value = 'img-upload__preview ';
           window.constants.imgEffect.classList.add(effectClass.classList[1]);
-          window.setEffects.reset();
+          window.setEffects.resetEffects();
         }
         if (window.constants.imgEffect.className === 'img-upload__preview effects__preview--none') {
           window.constants.effectField.classList.add('hidden');

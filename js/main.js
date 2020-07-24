@@ -11,7 +11,7 @@
 
     return pictureElement;
   };
-  window.photoX = function (photos) {
+  window.creatingPhotoX = function (photos) {
     for (var g = 0; g < photos.length; g++) {
       window.constants.fragment.appendChild(renderPicture(photos[g]));
     }
@@ -85,5 +85,14 @@
     createComments(bigPhoto);
     comments.appendChild(window.constants.fragment);
   };
+
+  window.constants.formUpload.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    console.log(window.constants.formUpload);
+    window.upload(new FormData(window.constants.formUpload), function () {
+      window.modal.closeUpload();
+      window.setEffects.resetEffects();
+    });
+  });
 })();
 // --------------------------------------------------------//

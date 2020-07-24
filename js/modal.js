@@ -14,7 +14,7 @@
       if (evt.key === 'Escape') {
         evt.preventDefault();
         window.modal.closeUpload();
-        window.constants.fildeComment.value = '';
+        window.constants.fieldComment.value = '';
         window.constants.hashTag.value = '';
       }
     },
@@ -60,7 +60,7 @@
   window.constants.upload.addEventListener('change', function () {
     window.modal.openUpload();
     window.setEffects.onloadUpload();
-    window.setEffects.reset();
+    window.setEffects.resetEffects();
   });
 
   window.constants.buttonCloseUpload.addEventListener('click', function () {
