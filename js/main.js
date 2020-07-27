@@ -11,7 +11,8 @@
 
     return pictureElement;
   };
-  window.creatingPhotoX = function (photos) {
+
+  window.createPhotoX = function (photos) {
     for (var g = 0; g < photos.length; g++) {
       window.constants.fragment.appendChild(renderPicture(photos[g]));
     }
@@ -86,13 +87,67 @@
     comments.appendChild(window.constants.fragment);
   };
 
+  window.onSuccess = function () {
+    window.modal.closeUpload();
+    window.setEffects.resetEffects();
+    window.renderMessageSuccess();
+
+    var closeButtonMess = document.querySelector('.success__button');
+
+    closeButtonMess.addEventListener('click', function () {
+      window.modal.closePopupSuccess();
+    });
+
+    window.addEventListener('click', function () {
+      window.modal.closePopupSuccess();
+    });
+
+    window.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        window.modal.onPopupEscSuccess(evt);
+      }
+    });
+  };
+  window.renderMessageSuccess = function () {
+    var messageElement = window.constants.success.cloneNode(true);
+    window.constants.fragment.appendChild(messageElement);
+    window.constants.main.appendChild(window.constants.fragment);
+  };
+
+  window.onError = function () {
+    window.modal.closeUpload();
+    window.setEffects.resetEffects();
+    window.renderMessageError();
+
+    var closeButtonMess = document.querySelector('.error__button');
+
+    closeButtonMess.addEventListener('click', function () {
+      window.modal.closePopupError();
+    });
+
+    window.addEventListener('click', function () {
+      window.modal.closePopupError();
+    });
+
+    window.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        window.modal.onPopupEscError(evt);
+      }
+    });
+  };
+
+  window.renderMessageError = function () {
+    var messageElement = window.constants.error.cloneNode(true);
+    window.constants.fragment.appendChild(messageElement);
+    window.constants.main.appendChild(window.constants.fragment);
+  };
+
+
   window.constants.formUpload.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    console.log(window.constants.formUpload);
-    window.upload(new FormData(window.constants.formUpload), function () {
-      window.modal.closeUpload();
-      window.setEffects.resetEffects();
-    });
+    window.upload(new FormData(window.constants.formUpload));
   });
 })();
 // --------------------------------------------------------//

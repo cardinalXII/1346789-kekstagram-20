@@ -1,38 +1,43 @@
 'use strict';
 
 (function () {
-  window.load = function (url) {
+  window.load = function () {
+    var address = window.constants.urlxml;
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
-        window.creatingPhotoX(xhr.response);
+        window.createPhotoX(xhr.response);
       }
     });
 
-    xhr.open('GET', url);
+    xhr.open('GET', address);
     xhr.send();
-    console.log(xhr);
   };
+  window.load();
 
-  window.load('https://javascript.pages.academy/kekstagram/data');
-
-
-  window.upload = function (data, onSuccess) {
-    var URL = 'https://javascript.pages.academy/kekstagram';
+  window.upload = function (data) {
+    var sendAddress = window.constants.urlsend;
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      onSuccess(xhr.response);
+      switch (xhr.status) {
+        case 200:
+          window.onSuccess();
+          break;
+        default:
+          window.onError();
+      }
     });
 
-    xhr.open('POST', URL);
-    xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+    xhr.addEventListener('error', function () {
+      window.onError();
+    });
+    xhr.open('POST', sendAddress);
 
     xhr.send(data);
-    console.log(xhr);
   };
 })();

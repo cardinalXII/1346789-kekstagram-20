@@ -38,7 +38,12 @@
   // Пустой объект
   var FRAGMENT = document.createDocumentFragment();
 
-  var ERROR = document.querySelector('#error');
+  var URLXML = 'https://javascript.pages.academy/kekstagram/data';
+  var URLSEND = 'https://javascript.pages.academy/kekstagram';
+
+  var ERROR = document.querySelector('#error').content.querySelector('.error');
+  var SUCCESS = document.querySelector('#success').content.querySelector('.success');
+  var MAIN = document.querySelector('main');
   // --------------------------------------------------------//
 
   window.constants = {
@@ -102,6 +107,14 @@
     formUpload: FORM_UPLOAD,
 
     error: ERROR,
+
+    success: SUCCESS,
+
+    main: MAIN,
+
+    urlxml: URLXML,
+
+    urlsend: URLSEND,
   };
 })();
 
