@@ -14,10 +14,25 @@
       if (evt.key === 'Escape') {
         evt.preventDefault();
         window.modal.closeUpload();
-        window.constants.fildeComment.value = '';
+        window.constants.fieldComment.value = '';
         window.constants.hashTag.value = '';
       }
     },
+
+    onPopupEscSuccess: function (evt) {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        window.modal.closePopupSuccess();
+      }
+    },
+
+    onPopupEscError: function (evt) {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        window.modal.closePopupError();
+      }
+    },
+
 
     // функция открытия
     openPopup: function () {
@@ -44,7 +59,6 @@
     closePopup: function () {
       // Скрыть окно
       window.constants.bigPicture.classList.add('hidden');
-
       // Удалить обработчики для закрытия
       document.removeEventListener('keydown', window.modal.onPopupEscPress);
       // разблокирует прокрутку фотографий на фоне
@@ -56,11 +70,34 @@
       // блокирует прокрутку фотографий на фоне
       document.body.classList.remove('modal-open');
     },
+
+    closePopupSuccess: function () {
+      // Скрыть окно
+      var poupMessSuccess = document.querySelector('.success');
+      poupMessSuccess.classList.add('hidden');
+      // Удалить обработчики для закрытия
+      document.removeEventListener('keydown', window.modal.onPopupEscSuccess);
+      // разблокирует прокрутку фотографий на фоне
+      document.body.classList.remove('modal-open');
+    },
+
+    closePopupError: function () {
+      // Скрыть окно
+      var poupMessError = document.querySelector('.error');
+      poupMessError.classList.add('hidden');
+      // Удалить обработчики для закрытия
+      document.removeEventListener('keydown', window.modal.onPopupEscError);
+      // разблокирует прокрутку фотографий на фоне
+      document.body.classList.remove('modal-open');
+    },
+
   };
+
+
   window.constants.upload.addEventListener('change', function () {
     window.modal.openUpload();
     window.setEffects.onloadUpload();
-    window.setEffects.reset();
+    window.setEffects.resetEffects();
   });
 
   window.constants.buttonCloseUpload.addEventListener('click', function () {

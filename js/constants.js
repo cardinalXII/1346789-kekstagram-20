@@ -34,9 +34,16 @@
   var HASH_TAG = document.querySelector('.text__hashtags');
 
   var FILDE_COMMENT = document.querySelector('.text__description');
-
+  var FORM_UPLOAD = document.querySelector('.img-upload__form');
   // Пустой объект
   var FRAGMENT = document.createDocumentFragment();
+
+  var URLXML = 'https://javascript.pages.academy/kekstagram/data';
+  var URLSEND = 'https://javascript.pages.academy/kekstagram';
+
+  var ERROR = document.querySelector('#error').content.querySelector('.error');
+  var SUCCESS = document.querySelector('#success').content.querySelector('.success');
+  var MAIN = document.querySelector('main');
   // --------------------------------------------------------//
 
   window.constants = {
@@ -96,6 +103,18 @@
     effectValue: EFFECT_VALUE,
 
     fragment: FRAGMENT,
+
+    formUpload: FORM_UPLOAD,
+
+    error: ERROR,
+
+    success: SUCCESS,
+
+    main: MAIN,
+
+    urlxml: URLXML,
+
+    urlsend: URLSEND,
   };
 })();
 
