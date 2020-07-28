@@ -113,18 +113,17 @@
       });
     },
 
-    removePicture: function (photosXhr) {
-      for (var u = 0; u < photosXhr.length; u++) {
-        var node = document.querySelector('.picture');
-        window.constants.picturesContainer.removeChild(node);
-      }
+    removePicture: function () {
+      window.constants.picturesContainer.querySelectorAll('.picture').forEach(function (item) {
+        window.constants.picturesContainer.removeChild(item);
+      });
     },
 
     sortingComments: function (sorter) {
-      var parserComments = function (a, b) {
+      var compareComments = function (a, b) {
         return (a.comments.length > b.comments.length) ? -1 : 1;
       };
-      sorter.sort(parserComments);
+      sorter.sort(compareComments);
       window.createPhotoX(sorter);
     },
 

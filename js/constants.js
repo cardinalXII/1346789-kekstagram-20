@@ -38,13 +38,13 @@
   // Пустой объект
   var FRAGMENT = document.createDocumentFragment();
 
-  var URLXML = 'https://javascript.pages.academy/kekstagram/data';
-  var URLSEND = 'https://javascript.pages.academy/kekstagram';
+  var URL_XML = 'https://javascript.pages.academy/kekstagram/data';
+  var URL_SEND = 'https://javascript.pages.academy/kekstagram';
 
   var FILTER = document.querySelector('.img-filters');
-  var FILTERDEFAULT = document.querySelector('#filter-default');
-  var FILTERRANDOM = document.querySelector('#filter-random');
-  var FILTERDISCUSSED = document.querySelector('#filter-discussed');
+  var FILTER_DEFAULT = document.querySelector('#filter-default');
+  var FILTER_RANDOM = document.querySelector('#filter-random');
+  var FILTER_DISCUSSED = document.querySelector('#filter-discussed');
 
   var ERROR = document.querySelector('#error').content.querySelector('.error');
   var SUCCESS = document.querySelector('#success').content.querySelector('.success');
@@ -117,17 +117,17 @@
 
     main: MAIN,
 
-    urlxml: URLXML,
+    urlxml: URL_XML,
 
-    urlsend: URLSEND,
+    urlsend: URL_SEND,
 
     filter: FILTER,
 
-    filterDefault: FILTERDEFAULT,
+    filterDefault: FILTER_DEFAULT,
 
-    filterRandom: FILTERRANDOM,
+    filterRandom: FILTER_RANDOM,
 
-    filterDiscussed: FILTERDISCUSSED,
+    filterDiscussed: FILTER_DISCUSSED,
   };
 })();
 
