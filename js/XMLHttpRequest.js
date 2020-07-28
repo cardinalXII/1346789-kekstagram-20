@@ -10,6 +10,7 @@
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
         window.createPhotoX(xhr.response);
+        window.modal.showFilter(xhr.response);
       }
     });
 

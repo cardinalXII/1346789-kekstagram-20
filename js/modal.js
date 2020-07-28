@@ -91,9 +91,51 @@
       document.body.classList.remove('modal-open');
     },
 
+    showFilter: function (photosXhr) {
+      var sorter = photosXhr.slice();
+
+      window.constants.filter.classList.remove('img-filters--inactive');
+
+      window.constants.filterDefault.addEventListener('click', function () {
+        window.modal.removePicture(photosXhr);
+        window.createPhotoX(photosXhr);
+
+      });
+
+      window.constants.filterRandom.addEventListener('click', function () {
+        window.modal.removePicture(photosXhr);
+        window.modal.sortingRandom(sorter);
+      });
+
+      window.constants.filterDiscussed.addEventListener('click', function () {
+        window.modal.removePicture(photosXhr);
+        window.modal.sortingComments(sorter);
+      });
+    },
+
+    removePicture: function (photosXhr) {
+      for (var u = 0; u < photosXhr.length; u++) {
+        var node = document.querySelector('.picture');
+        window.constants.picturesContainer.removeChild(node);
+      }
+    },
+
+    sortingComments: function (sorter) {
+      var parserComments = function (a, b) {
+        return (a.comments.length > b.comments.length) ? -1 : 1;
+      };
+      sorter.sort(parserComments);
+      window.createPhotoX(sorter);
+    },
+
+    sortingRandom: function (sorter) {
+      var randoming = function () {
+        return Math.random() - 0.5;
+      };
+      sorter.sort(randoming);
+      window.createPhotoX(sorter);
+    },
   };
-
-
   window.constants.upload.addEventListener('change', function () {
     window.modal.openUpload();
     window.setEffects.onloadUpload();

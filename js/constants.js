@@ -41,6 +41,11 @@
   var URLXML = 'https://javascript.pages.academy/kekstagram/data';
   var URLSEND = 'https://javascript.pages.academy/kekstagram';
 
+  var FILTER = document.querySelector('.img-filters');
+  var FILTERDEFAULT = document.querySelector('#filter-default');
+  var FILTERRANDOM = document.querySelector('#filter-random');
+  var FILTERDISCUSSED = document.querySelector('#filter-discussed');
+
   var ERROR = document.querySelector('#error').content.querySelector('.error');
   var SUCCESS = document.querySelector('#success').content.querySelector('.success');
   var MAIN = document.querySelector('main');
@@ -115,6 +120,14 @@
     urlxml: URLXML,
 
     urlsend: URLSEND,
+
+    filter: FILTER,
+
+    filterDefault: FILTERDEFAULT,
+
+    filterRandom: FILTERRANDOM,
+
+    filterDiscussed: FILTERDISCUSSED,
   };
 })();
 
