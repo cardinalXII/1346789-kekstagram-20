@@ -83,14 +83,16 @@
     };
 
     var addComments = function (photoComment) {
-      for (var f = 5; f < bigPhoto.comments.length; f++) {
+      var current = document.querySelectorAll('.social__comment').length;
+      var limit = Math.min(current + 5, bigPhoto.comments.length);
+      for (var f = current; f < limit; f++) {
         var commentElement = commentItems[0].cloneNode(true);
         commentElement.querySelector('.social__picture').setAttribute('src', photoComment.comments[f].avatar);
         commentElement.querySelector('.social__picture').setAttribute('alt', photoComment.comments[f].name);
         commentElement.querySelector('.social__text').textContent = photoComment.comments[f].message;
         window.constants.fragment.appendChild(commentElement);
       }
-      if (bigPhoto.comments.length === bigPhoto.comments.length) {
+      if (current === bigPhoto.comments.length) {
         window.constants.buttonShowComments.classList.add('hidden');
       }
     };
