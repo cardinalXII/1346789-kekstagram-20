@@ -62,9 +62,7 @@
     window.constants.bigPicture.querySelector('.social__caption').textContent = bigPhoto.description;
     // скрывает счётчик комментариев и загрузку новых комментариев
     var commentCount = window.constants.bigPicture.querySelector('.social__comment-count');
-    var commentsLoader = window.constants.bigPicture.querySelector('.comments-loader');
     commentCount.classList.add('hidden');
-    commentsLoader.classList.add('hidden');
 
     // удаляет шаблонные комментарии
     var comments = window.constants.bigPicture.querySelector('.social__comments');
@@ -75,7 +73,7 @@
     });
     // создает комментарий по шаблону
     var createComments = function (photoComment) {
-      for (var v = 0; v < bigPhoto.comments.length; v++) {
+      for (var v = 0; v < 5; v++) {
         var commentElement = commentItems[0].cloneNode(true);
         commentElement.querySelector('.social__picture').setAttribute('src', photoComment.comments[v].avatar);
         commentElement.querySelector('.social__picture').setAttribute('alt', photoComment.comments[v].name);
@@ -83,8 +81,25 @@
         window.constants.fragment.appendChild(commentElement);
       }
     };
+
+    var addComments = function (photoComment) {
+      for (var f = 5; f < bigPhoto.comments.length; f++) {
+        var commentElement = commentItems[0].cloneNode(true);
+        commentElement.querySelector('.social__picture').setAttribute('src', photoComment.comments[f].avatar);
+        commentElement.querySelector('.social__picture').setAttribute('alt', photoComment.comments[f].name);
+        commentElement.querySelector('.social__text').textContent = photoComment.comments[f].message;
+        window.constants.fragment.appendChild(commentElement);
+      }
+      if (bigPhoto.comments.length === bigPhoto.comments.length) {
+        window.constants.buttonShowComments.classList.add('hidden');
+      }
+    };
     createComments(bigPhoto);
     comments.appendChild(window.constants.fragment);
+    window.constants.buttonShowComments.addEventListener('click', function () {
+      addComments(bigPhoto);
+      comments.appendChild(window.constants.fragment);
+    });
   };
 
   window.onSuccess = function () {

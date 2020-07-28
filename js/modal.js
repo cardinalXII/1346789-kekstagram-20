@@ -38,13 +38,12 @@
     openPopup: function () {
       // Показать окно
       window.constants.bigPicture.classList.remove('hidden');
+      window.constants.buttonShowComments.classList.remove('hidden');
 
       // Добавить обработчики для закрытия
       document.addEventListener('keydown', window.modal.onPopupEscPress);
       // блокирует прокрутку фотографий на фоне
       document.body.classList.add('modal-open');
-
-      console.log(window.constants.commentsPicture.);
     },
 
     openUpload: function () {
@@ -93,9 +92,50 @@
       document.body.classList.remove('modal-open');
     },
 
+    showFilter: function (photosXhr) {
+      var sorter = photosXhr.slice();
+
+      window.constants.filter.classList.remove('img-filters--inactive');
+
+      window.constants.filterDefault.addEventListener('click', function () {
+        window.modal.removePicture(photosXhr);
+        window.createPhotoX(photosXhr);
+
+      });
+
+      window.constants.filterRandom.addEventListener('click', function () {
+        window.modal.removePicture(photosXhr);
+        window.modal.sortingRandom(sorter);
+      });
+
+      window.constants.filterDiscussed.addEventListener('click', function () {
+        window.modal.removePicture(photosXhr);
+        window.modal.sortingComments(sorter);
+      });
+    },
+
+    removePicture: function () {
+      window.constants.picturesContainer.querySelectorAll('.picture').forEach(function (item) {
+        window.constants.picturesContainer.removeChild(item);
+      });
+    },
+
+    sortingComments: function (sorter) {
+      var compareComments = function (a, b) {
+        return (a.comments.length > b.comments.length) ? -1 : 1;
+      };
+      sorter.sort(compareComments);
+      window.createPhotoX(sorter);
+    },
+
+    sortingRandom: function (sorter) {
+      var randoming = function () {
+        return Math.random() - 0.5;
+      };
+      sorter.sort(randoming);
+      window.createPhotoX(sorter);
+    },
   };
-
-
   window.constants.upload.addEventListener('change', function () {
     window.modal.openUpload();
     window.setEffects.onloadUpload();

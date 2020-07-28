@@ -13,7 +13,6 @@
   var MIN_ZOOM = 25;
   var MAX_ZOOM = 100;
   var BIG_PICTURE = document.querySelector('.big-picture');
-  var COMMENTS_PICTURE = document.querySelectorAll('.social__comments');
   var BUTTON_SHOW_COMMENTS = document.querySelector('.comments-loader');
   var BUTTON_CLOSE_FULLSCREEN = BIG_PICTURE.querySelector('#picture-cancel');
 
@@ -40,8 +39,13 @@
   // Пустой объект
   var FRAGMENT = document.createDocumentFragment();
 
-  var URLXML = 'https://javascript.pages.academy/kekstagram/data';
-  var URLSEND = 'https://javascript.pages.academy/kekstagram';
+  var URL_XML = 'https://javascript.pages.academy/kekstagram/data';
+  var URL_SEND = 'https://javascript.pages.academy/kekstagram';
+
+  var FILTER = document.querySelector('.img-filters');
+  var FILTER_DEFAULT = document.querySelector('#filter-default');
+  var FILTER_RANDOM = document.querySelector('#filter-random');
+  var FILTER_DISCUSSED = document.querySelector('#filter-discussed');
 
   var ERROR = document.querySelector('#error').content.querySelector('.error');
   var SUCCESS = document.querySelector('#success').content.querySelector('.success');
@@ -51,8 +55,6 @@
   window.constants = {
 
     bigPicture: BIG_PICTURE,
-
-    commentsPicture: COMMENTS_PICTURE,
 
     buttonShowComments: BUTTON_SHOW_COMMENTS,
 
@@ -118,9 +120,17 @@
 
     main: MAIN,
 
-    urlxml: URLXML,
+    urlxml: URL_XML,
 
-    urlsend: URLSEND,
+    urlsend: URL_SEND,
+
+    filter: FILTER,
+
+    filterDefault: FILTER_DEFAULT,
+
+    filterRandom: FILTER_RANDOM,
+
+    filterDiscussed: FILTER_DISCUSSED,
   };
 })();
 
