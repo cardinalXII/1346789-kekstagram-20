@@ -13,6 +13,8 @@
   var MIN_ZOOM = 25;
   var MAX_ZOOM = 100;
   var BIG_PICTURE = document.querySelector('.big-picture');
+  var COMMENTS_PICTURE = document.querySelectorAll('.social__comments');
+  var BUTTON_SHOW_COMMENTS = document.querySelector('.comments-loader');
   var BUTTON_CLOSE_FULLSCREEN = BIG_PICTURE.querySelector('#picture-cancel');
 
   var UPLOAD = document.querySelector('#upload-file');
@@ -49,6 +51,10 @@
   window.constants = {
 
     bigPicture: BIG_PICTURE,
+
+    commentsPicture: COMMENTS_PICTURE,
+
+    buttonShowComments: BUTTON_SHOW_COMMENTS,
 
     form: FORM,
 

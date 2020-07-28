@@ -43,6 +43,8 @@
       document.addEventListener('keydown', window.modal.onPopupEscPress);
       // блокирует прокрутку фотографий на фоне
       document.body.classList.add('modal-open');
+
+      console.log(window.constants.commentsPicture.);
     },
 
     openUpload: function () {
